@@ -103,17 +103,22 @@
 					<section>
 						<h2>Coding phase</h2>
 						<h4>Tool: <span style="color: lightseagreen">Github</span></h4>
-						<img data-src="lib/img/coding.gif" style="position: absolute; right: 0; border: none; width: 200px"/>
-						<p style="text-align: left;">Workflow:</p>
-						<ul>
-							<li>task is an open issue on Github</li>
-							<li><span style="color: goldenrod">create branch</span> for this issue</li>
-							<li><span style="color: goldenrod">commit</span> code to the branch</li>
-							<li><span style="color: goldenrod">push</span> branch to Github: <span style="color: green">triggers 'build' phase</span></li>
-						</ul>
-						<p style="font-size: smaller; text-align: left;">
-							Note: in every repository there is a directory `.circleci` with a `config.yml` file for CircleCI. Without it next phase won't be triggered.
-						</p>
+						<img data-src="lib/img/coding.gif" style="border: none; width: 200px; box-shadow: none"/>
+					</section>
+					<section>
+						<p>Task is an open issue on Github</p>
+						<img data-src="lib/img/create-issue.gif">
+					</section>
+					<section>
+						<p>Create <span style="color: goldenrod">branch</span> for this issue</p>
+						<img data-src="lib/img/create-branch.gif">
+					</section>
+					<section>
+						<p><span style="color: goldenrod">Commit</span> code to the branch and <span style="color: goldenrod">push</span> branch to Github</p>
+						<img data-src="lib/img/change-readme.gif">
+					</section>
+					<section>
+						<p>In every repository there is a directory <span style="color: goldenrod">.circleci</span> with a <span style="color: goldenrod">config.yml</span> file for CircleCI. Without it next phase won't be triggered.</p>
 					</section>
 					<section>
 						<p style="font-size: smaller; text-align: left;">If module can't be deployed (e.g. grails plugin), it is deployed as a part of bigger application.</p>
@@ -130,19 +135,24 @@
 					<section>
 						<h2>Building phase</h2>
 						<h4>Tool: <span style="color: lightseagreen">CircleCI</span></h4>
-						<p style="text-align: left;">Workflow:</p>
+					</section>
+					<section>
+						<span style="color: goldenrod">Automatically starts</span> when commit is pushed
+						<img data-src="lib/img/build-started.png">
+					</section>
+					<section>
+						<span style="color: goldenrod">Automatically executes</span> workflow for this branch
 						<ul>
-							<li><span style="color: goldenrod">automatically starts</span> when commit is pushed</li>
-							<li><span style="color: goldenrod">automatically executes</span> workflow for this branch
-								<ul>
-									<li>run unit tests</li>
-									<li>run integration tests</li>
-									<li>build and publish artifacts</li>
-									<li>build and publish docker images</li>
-								</ul>
-							</li>
-							<li><span style="color: green">triggers the next stage</span>: deploy to Kubernetes cluster</li>
+							<li>run unit tests</li>
+							<li>run integration tests</li>
+							<li>build and publish artifacts</li>
+							<li>build and publish docker images</li>
 						</ul>
+					</section>
+					<section>
+						<p>CircleCI build workflow</p>
+						<img data-src="lib/img/build-finished.png" style="width: 450px">
+						<p><span style="color: green">Triggers the next stage</span>: deploy to Kubernetes cluster</p>
 					</section>
 					<section>
 						<p style="text-align: left;">Notes:</p>
@@ -169,11 +179,8 @@
 						</ul>
 					</section>
 					<section>
-						<p style="text-align: left;">Notes:</p>
-						<ul>
-							<li>deployments for <span style="color: goldenrod">private repositories</span> are <span style="color: goldenrod">secured</span> by Azure ActiveDirectory and allow access only for OpusCapita members</li>
-							<li>configuration for deployments is placed in <span style="color: goldenrod">continuous-delivery</span> branch in a repository been built</li>
-						</ul>
+						<p>CircleCI deployment workflow</p>
+						<img data-src="lib/img/deployment-finished.png" style="width: 450px">
 					</section>
 					<section>
 						<img data-src="lib/img/slack-logo.png" style="border: none; box-shadow: none; background: none; width: 150px"/>
@@ -181,13 +188,21 @@
 						<img data-src="lib/img/slack-notification.png" style="border: none">
 					</section>
 					<section>
-						<p>When deployment is up an running it is accessible in browser via URL, e.g. https://demo.core.dev.opuscapita.com/<span style="color: goldenrod">prov</span>/<span style="color: green">master</span>/</p>
+						<p>When deployment is up an running it is accessible in browser via URL, e.g. https://demo.core.dev.opuscapita.com/<span style="color: goldenrod">repo</span>/<span style="color: green">branch</span>/</p>
+						<img data-src="lib/img/live-website.png">
 					</section>
 					<section>
 						<ul>
 							<li>QA can perform manual and/or automated testing on a <span style="color: goldenrod">live running application</span></li>
 							<li>If QA <span style="color: red">fails</span> ticket is returned to developer and the whole process <span style="color: red">starts over</span></li>
-							<li>If QA is <span style="color: green">successful</span> then <span style="color: green">trigger release phase</span></li>
+							<li>If QA is <span style="color: green">successful</span> then QA <span style="color: green">triggers release phase</span></li>
+						</ul>
+					</section>
+					<section>
+						<p style="text-align: left;">Notes:</p>
+						<ul>
+							<li>deployments for <span style="color: goldenrod">private repositories</span> are <span style="color: goldenrod">secured</span> by Azure ActiveDirectory and allow access only for OpusCapita members</li>
+							<li>configuration for deployments is placed in <span style="color: goldenrod">continuous-delivery</span> branch in a repository been built</li>
 						</ul>
 					</section>
 				</section>

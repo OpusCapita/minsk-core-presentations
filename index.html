@@ -34,12 +34,46 @@
 						## Use case
 
 						- ~200 Github repositories
-						- development on branches - **isolated branch per task**
+						- development on branches - **branch per task**
 						- branches can have different lifespan:
 							- **stable** branch(es)
 							- **bugfix** branches
 							- **development** branches
 					</textarea>
+				</section>
+				<section>
+					<h2>Without continuous development</h2>
+					<ul>
+						<li><span style="color: goldenrod">create development branch</span> out of stable branch</li>
+						<li><span style="color: goldenrod">write code</span></li>
+						<li><span style="color: goldenrod">commit</span> to development branch</li>
+						<li><span style="color: goldenrod">build</span> artifacts for QA <span style="color: red">(takes time)</span></li>
+						<li>give QA links to artifacts</li>
+						<li>QA tries to <span style="color: red">deploy</span> app locally <span style="color: red">(takes time, can fail)</span></li>
+						<li>QA test fails -> start over</li>
+					</ul>
+				</section>
+				<section>
+					<h2>With continuous development</h2>
+					<ul>
+						<li><span style="color: goldenrod">create development branch</span> out of stable branch</li>
+						<li><span style="color: goldenrod">write code</span></li>
+						<li><span style="color: goldenrod">commit</span> to development branch</li>
+						<li>assign ticket to QA</li>
+						<li><span style="color: goldenrod">start next task</span></li>
+					</ul>
+					<p><span style="color: green">Build</span> and <span style="color: green">deployment</span> are handled by background job.</p>
+				</section>
+				<section style="font-size: smaller">
+					<h2>Benefits of Continuous Development</h2>
+					<ul>
+						<li><span style="color: green">reduced overhead</span> of repetitive build/deployment operations</li>
+						<li><span style="color: green">reproducible builds</span> in predictable environment reduce uncertainty when build fails</li>
+						<li>more frequent cycles allow <span style="color: green">more rapid software development</span></li>
+						<li>developer and QA are <span style="color: green">focused on their job</span>, rather than fighting deployment issues</li>
+						<li><span style="color: green">less room for mistakes</span></li>
+						<li>clear separation of responsibility</li>
+					</ul>
 				</section>
 			</div>
 		</div>

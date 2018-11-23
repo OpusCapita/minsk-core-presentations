@@ -24,9 +24,8 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>
-					<img data-src="lib/img/logo.png" style="background: none; border: none; max-width: 45%" />
-					<h2 style="margin: 50px auto">Continuous Development in Minsk core team</h2>
+				<section data-background-image="lib/img/team.jpg">
+					<h2 style="margin: 220px auto 50px">Continuous Development in Minsk core team</h2>
 					<p>Speaker: Egor Stambakio</p>
 				</section>
 				<section data-markdown>
@@ -127,7 +126,7 @@
 						</ul>
 					</section>
 				</section>
-				<section style="font-size: smaller">
+				<section>
 					<section>
 						<h2>Building phase</h2>
 						<h4>Tool: <span style="color: lightseagreen">CircleCI</span></h4>
@@ -152,6 +151,56 @@
 							<li>deployment job to CircleCI is unified in form of reusable config "Orb" located here <a href="https://github.com/OpusCapita/circleci-orbs/tree/master/src/kubernetes">https://github.com/OpusCapita/circleci-orbs/tree/master/src/kubernetes</a></li>
 							<li>adding deployment job is as simple as adding 2 lines of text</li>
 						</ul>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>Deployment and testing</h2>
+						<h4>Tool: <span style="color: lightseagreen">Azure AKS</span></h4>
+						<img data-src="lib/img/k8s-logo.png" style="border: none; box-shadow: none; background: none; width: 150px"/>
+						<p>Kubernetes cluster is provisioned for development purposes using Azure AKS service.</p>
+					</section>
+					<section>
+						<p style="text-align: left;">Every <span style="color: goldenrod">branch</span> is deployed into a separate <span style="color: goldenrod">namespace</span> (e.g. virtual sub-cluster).</p>
+						<ul>
+							<li>this separates deployment related to one task in a single module from all other deployments in cluster</li>
+							<li>provides a scope for names, e.g. eliminates possibility of naming collisons between Kubernetes resourses</li>
+							<li>allows to limit resources consumption per deployment</li>
+						</ul>
+					</section>
+					<section>
+						<p style="text-align: left;">Notes:</p>
+						<ul>
+							<li>deployments for <span style="color: goldenrod">private repositories</span> are <span style="color: goldenrod">secured</span> by Azure ActiveDirectory and allow access only for OpusCapita members</li>
+							<li>configuration for deployments is placed in <span style="color: goldenrod">continuous-delivery</span> branch in a repository been built</li>
+						</ul>
+					</section>
+					<section>
+						<img data-src="lib/img/slack-logo.png" style="border: none; box-shadow: none; background: none; width: 150px"/>
+						<p style="text-align: left;">When deployment is triggered by previous step, <span style="color: goldenrod">notification</span> is sent into <span style="color: goldenrod">Slack</span> channel providing useful details, e.g. links to deployment, source code, etc.</p>
+						<img data-src="lib/img/slack-notification.png" style="border: none">
+					</section>
+					<section>
+						<p>When deployment is up an running it is accessible in browser via URL, e.g. https://demo.core.dev.opuscapita.com/<span style="color: goldenrod">prov</span>/<span style="color: green">master</span>/</p>
+					</section>
+					<section>
+						<ul>
+							<li>QA can perform manual and/or automated testing on a <span style="color: goldenrod">live running application</span></li>
+							<li>If QA <span style="color: red">fails</span> ticket is returned to developer and the whole process <span style="color: red">starts over</span></li>
+							<li>If QA is <span style="color: green">successful</span> then <span style="color: green">trigger release phase</span></li>
+						</ul>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>Release phase</h2>
+						<h4>Tools:</h4>
+						<h4><span style="color: lightseagreen">Github</span></h4>
+						<h4><span style="color: lightseagreen">CircleCI</span></h4>
+						<h4><span style="color: lightseagreen">Minsk Core Multitool</span></h4>
+						<a href="https://demo.core.dev.opuscapita.com/minsk-core-multitool/master" style="font-size: 20px">
+							https://demo.core.dev.opuscapita.com/minsk-core-multitool/master
+						</a>
 					</section>
 				</section>
 			</div>

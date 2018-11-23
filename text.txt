@@ -1,0 +1,157 @@
+OpusCapita
+
+# Continuous Development in Minsk core team
+
+## Use case
+
+- ~200 Github repositories
+- development on branches: isolated branch per task
+- branches cna have different lifespan: `stable` branch(es), bugfix branches, and development branches
+
+### Without continuous development
+
+<< scr >> 100 hands
+
+- create branch
+- write code
+- commit to branch
+- build artifacts manually
+- push artifacts to QA
+- QA starts application locally
+- QA test fails -> start over
+
+### With continuous development
+
+<< scr >> circle cd
+
+- create branch
+- write code
+- commit to branch
+- assign ticket to QA 
+-> start next task
+
+Build and deployment are handled by background job.
+
+### Benefits of CD
+- developer and QA are focused on their job, rather than fighting deployment issues
+- reduced overhead of repetitive build/deployment operations
+- reproducible builds in predictable environment reduce uncertainty when build fails
+- more frequent cycles allow more rapid software development
+- less room for mistakes
+- clear separation of responsibility
+
+## Our solution
+
+### Development phases: 
+- coding
+- building:
+	- running automated tests on codebase, 
+	- building artifacts (WAR files, docker images)
+- deployment and testing:
+	- deploying live demo website accessible via browser
+	- QA testing
+- release after successful testing, otherwise start again
+	
+### Coding phase
+
+Tool: Github
+
+Workflow:
+- task is an open issue on Github
+- create branch for this issue
+- commit code to the branch
+- push branch to Github: triggers the next **build** phase
+
+If module can't be deployed (e.g. grails plugin), it is deployed as a part of bigger application.
+
+In this case additional steps are required:
+- create a branch in application repository
+- plug in module's development branch as a dependency
+- push branch in application: triggers the next **build** phase
+
+Note: in every repository there is a directory `.circleci` with a `config.yml` file for CircleCI. Without it next phase won't be triggered.
+
+### Building phase
+
+Tool: CircleCI
+
+Workflow:
+- automatically receives notification from Github about pushed commit
+- automatically executes workflow defined in config file for this branch
+	- run unit tests
+	- run integration tests
+	- build and publish artifacts
+	- build and publish docker images
+- triggers the next stage: **deploy** built application in Kubernetes cluster
+
+<< scr >> ?
+
+Notes:
+- configuration for deployments is placed in `continuous-delivery` branch in a repository been built
+- deployment job to CircleCI is unified in form of reusable config "Orb" which is located here https://github.com/OpusCapita/circleci-orbs/tree/master/src/kubernetes
+- adding deployment job is as simple as adding 2 lines of text
+
+### Deployment and testing
+
+Tool: Azure AKS
+
+Key points:
+- Kubernetes cluster is provisioned for development purposes
+- every branch is deployed into a separate namespace (e.g. virtual sub-cluster)
+	- this **separates** deployment related to one task in a single module from all other deployments in cluster
+	- provides a scope for names, e.g. eliminates possibility of naming collisons between Kubernetes resourses
+	- allows to limit resources consumption per deployment
+- when deployment is triggered by previous step, notification is sent into Slack channel providing useful details, e.g. links to deployment, source code, etc.
+- when deployment is up an running it is accessible in browser via URL, e.g. https://demo.core.dev.opuscapita.com/{REPOSITORY_NAME}/{BRANCH}/
+- QA can perform manual and/or automated testing on a live running application
+- if QA is successful then trigger **release** phase, else ticket is returned to developer and process starts over
+
+Note: deployments for private repositories are secured by Azure ActiveDirectory and allow access only for OpusCapita members
+
+### Release phase
+
+Tools:
+- Github
+- CircleCI
+- Minsk-Core-Multitool: https://demo.core.dev.opuscapita.com/minsk-core-multitool/master
+
+Workflow for developer:
+- merge development branch to the main (usually **master**) branch. This triggers automated CircleCI build on master branch
+- delete development branch (press a button on Github)
+- if build on main branch is successful, go to `Minsk-Core-Multitool`
+	- select repository and main branch
+	- fill in release and SNAPSHOT versions 
+	- select ticket(s) which developer implemented or fixed in this cycle
+	- submit request
+- CircleCI starts automated build according to rules defined in `release` branch in the repository
+	- Github release is created, assigned a milestone, latest commit is tagged with release version
+	- selected tickets are closed automatically
+	- artifacts are built and published with the same version to corresponding repositories (maven artifactory, npmjs, etc.)
+
+Note: preferred merge mode is `squash & merge`, which creates a single merge commit out of all branch commits. 
+
+Here developer should provide message according to template described here: https://github.com/OpusCapita/minsk-core-multitool
+
+Properly formatted message will be automatically parsed during release phase and used as a part of release notes.
+
+<< scr >>
+
+## Conclusion
+
+No more inventing a wheel for every ticket: clear workflow covers all needs in 9/10 cases (and growing as development flow is adjusted to the needs of team).
+
+Nobody needs to wait for someone else. This results in time saving while providing better quality: more frequent development, less features to test, more focus.
+
+This approach provides clear separation of concerns and responsibility: developer is coding, QA is testing, robots assemble all parts. If something breaks along the line, it's easier to debug.
+
+While setup looks unified, developer can be easily fine-grain or change it entirely, because configurations for all steps belong to a repository. Configuration for build process can differ per branch, configuration for deployment and release processes can differ per repository.
+
+## What's next?
+
+I encourage **developers** to follow these guidelines carefully, e.g. properly use branches, don't forget to write release notes in merge commit, use release tool instead of releasing manually.
+
+I encourage **teams** to consider this workflow for their development process, because it's completely hands-on and Minsk core team benefits from it on a daily basis. 
+
+We are here to help: opuscapita.slack#minsk-core-team
+
+Thank you.

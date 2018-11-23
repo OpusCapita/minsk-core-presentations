@@ -202,6 +202,43 @@
 							https://demo.core.dev.opuscapita.com/minsk-core-multitool/master
 						</a>
 					</section>
+					<section>
+						<p>Merge development branch to the main (usually <span style="color: goldenrod">master</span>) branch. This triggers automated CircleCI build on main branch.</p>
+						<!-- TODO image -->
+					</section>
+					<section>
+						<p>Recommended merge mode is <span style="color: goldenrod">squash & merge</span>, which creates a <span style="color: goldenrod">single merge commit</span> out of all branch commits.</p>
+						<p>Here developer should provide message according to <a href="https://github.com/OpusCapita/minsk-core-multitool">particulat template</a>.</p>
+						<!-- TODO image -->
+					</section>
+					<section>
+						<p>Properly formatted message will be automatically parsed during release phase and used as a part of <span style="color: goldenrod">release notes</span>.</p>
+						<!-- TODO image -->
+					</section>
+					<section>
+						<p>Delete development branch after merge (press a button on Github)</p>
+						<!-- TODO image -->
+					</section>
+					<section>
+						<p style="text-align: left;">If build on main branch is successful go to <a href="https://demo.core.dev.opuscapita.com/minsk-core-multitool/master">Minsk&nbsp;Core&nbsp;Multitool</a></p>
+						<ul>
+							<li>select repository and main branch</li>
+							<li>fill in release and SNAPSHOT versions</li>
+							<li>select ticket(s) which developer implemented or fixed in this cycle</li>
+							<li>submit request</li>
+						</ul>
+						<!-- TODO image -->
+					</section>
+					<section>
+						<p style="text-align: left;">CircleCI starts automated build according to rules defined in <span style="color: goldenrod">release</span> branch in the repository</p>
+						<ul>
+							<li>Github release is created, assigned a milestone, latest commit is tagged with release version</li>
+							<li>selected tickets are closed automatically</li>
+							<li>artifacts are built and published with the same version to corresponding repositories (maven artifactory, npmjs, etc.)</li>
+						</ul>
+						<!-- TODO image -->
+					</section>
+
 				</section>
 			</div>
 		</div>

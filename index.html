@@ -25,7 +25,7 @@
 		<div class="reveal">
 			<div class="slides">
 				<section>
-					<img src="lib/img/logo.png" style="background: none; border: none; max-width: 45%" />
+					<img data-src="lib/img/logo.png" style="background: none; border: none; max-width: 45%" />
 					<h2 style="margin: 50px auto">Continuous Development in Minsk core team</h2>
 					<p>Speaker: Egor Stambakio</p>
 				</section>
@@ -74,6 +74,85 @@
 						<li><span style="color: green">less room for mistakes</span></li>
 						<li>clear separation of responsibility</li>
 					</ul>
+				</section>
+				<section>
+					<h1>Our solution</h1>
+					<img data-src="lib/img/cd-circle.png" style="background: none; border: none; max-width: 45%" />
+				</section>
+				<section>
+					<h2>Development phases</h2>
+					<ul>
+						<li><span style="color: goldenrod">coding</span></li>
+						<li>
+								<span style="color: goldenrod">building</span>
+							<ul>
+								<li>running automated tests on codebase</li>
+								<li>building artifacts (WAR files, docker images)</li>
+							</ul>
+						</li>
+						<li>
+								<span style="color: goldenrod">deployment and testing</span>
+							<ul>
+								<li>deploying live demo website accessible by URL</li>
+								<li>QA testing</li>
+							</ul>
+						</li>
+						<li><span style="color: goldenrod">release</span> after successful testing,<br>otherwise start over</li>
+					</ul>
+				</section>
+				<section>
+					<section>
+						<h2>Coding phase</h2>
+						<h4>Tool: <span style="color: lightseagreen">Github</span></h4>
+						<img data-src="lib/img/coding.gif" style="position: absolute; right: 0; border: none; width: 200px"/>
+						<p style="text-align: left;">Workflow:</p>
+						<ul>
+							<li>task is an open issue on Github</li>
+							<li><span style="color: goldenrod">create branch</span> for this issue</li>
+							<li><span style="color: goldenrod">commit</span> code to the branch</li>
+							<li><span style="color: goldenrod">push</span> branch to Github: <span style="color: green">triggers 'build' phase</span></li>
+						</ul>
+						<p style="font-size: smaller; text-align: left;">
+							Note: in every repository there is a directory `.circleci` with a `config.yml` file for CircleCI. Without it next phase won't be triggered.
+						</p>
+					</section>
+					<section>
+						<p style="font-size: smaller; text-align: left;">If module can't be deployed (e.g. grails plugin), it is deployed as a part of bigger application.</p>
+
+						<p style="font-size: smaller; text-align: left;">In this case additional steps are required:</p>
+						<ul>
+							<li><span style="color: goldenrod">create a branch</span> in application repository</li>
+							<li><span style="color: goldenrod">plug in</span> module's development branch as a dependency</li>
+							<li><span style="color: goldenrod">push</span> branch in application: <span style="color: green">triggers 'build' phase</span></li>
+						</ul>
+					</section>
+				</section>
+				<section style="font-size: smaller">
+					<section>
+						<h2>Building phase</h2>
+						<h4>Tool: <span style="color: lightseagreen">CircleCI</span></h4>
+						<p style="text-align: left;">Workflow:</p>
+						<ul>
+							<li><span style="color: goldenrod">automatically starts</span> when commit is pushed</li>
+							<li><span style="color: goldenrod">automatically executes</span> workflow for this branch
+								<ul>
+									<li>run unit tests</li>
+									<li>run integration tests</li>
+									<li>build and publish artifacts</li>
+									<li>build and publish docker images</li>
+								</ul>
+							</li>
+							<li><span style="color: green">triggers the next stage</span>: deploy to Kubernetes cluster</li>
+						</ul>
+					</section>
+					<section>
+						<p style="text-align: left;">Notes:</p>
+						<ul>
+							<li>build is configured in .circleci/config.yml file in current branch</li>
+							<li>deployment job to CircleCI is unified in form of reusable config "Orb" located here <a href="https://github.com/OpusCapita/circleci-orbs/tree/master/src/kubernetes">https://github.com/OpusCapita/circleci-orbs/tree/master/src/kubernetes</a></li>
+							<li>adding deployment job is as simple as adding 2 lines of text</li>
+						</ul>
+					</section>
 				</section>
 			</div>
 		</div>

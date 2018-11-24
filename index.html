@@ -25,20 +25,30 @@
 		<div class="reveal">
 			<div class="slides">
 				<section data-background-image="lib/img/team.jpg">
-					<h2 style="margin: 220px auto 50px">Continuous Development in Minsk core team</h2>
+					<h2 style="margin: 220px auto 50px;">Continuous Development in Minsk core team</h2>
 					<p>Speaker: Egor Stambakio</p>
 				</section>
-				<section data-markdown>
-					<textarea data-template>
-						## Use case
-
-						- ~200 Github repositories
-						- development on branches - **branch per task**
-						- branches can have different lifespan:
-							- **stable** branch(es)
-							- **bugfix** branches
-							- **development** branches
-					</textarea>
+				<section>
+					<h2>Use case</h2>
+					<ul>
+						<li>~200 Github repositories</li>
+						<li>modules and standalone applications written in different languages, using different build tools</li>
+						<li>requirement to support <span style="color: goldenrod">multiple versions</span> per module - one or more stable and many bugfix branches</li>
+					</ul>
+				</section>
+				<section>
+					<h2>Challenge</h2>
+					<p>Organize <span style="color: goldenrod">efficient</span> development process where development cycle takes <span style="color: goldenrod">less time</span> and provides <span style="color: goldenrod">highest quality</span> at the same time.</p>
+					<img data-src="lib/img/cd-circle.png" style="background: none; border: none; max-width: 45%" />
+				</section>
+				<section>
+					<h2>Key decision:<br><span style="color: goldenrod">branch per task</span></h2>
+					<ul>
+						<li>tasks are developed in <span style="color: goldenrod">isolation</span></li>
+						<li>less cases to test</li>
+						<li>less collisions and merge conflicts</li>
+						<li>ability to define clear workflow</li>
+					</ul>
 				</section>
 				<section>
 					<h2>Without continuous development</h2>
@@ -224,19 +234,21 @@
 					</section>
 					<section>
 						<p>Merge development branch to the main (usually <span style="color: goldenrod">master</span>) branch. This triggers automated CircleCI build on main branch.</p>
-						<!-- TODO image -->
 					</section>
 					<section>
 						<p>Recommended merge mode is <span style="color: goldenrod">squash & merge</span>, which creates a <span style="color: goldenrod">single merge commit</span> out of all branch commits.</p>
-						<p>Here developer should provide message according to <a href="https://github.com/OpusCapita/minsk-core-multitool">particulat template</a>.</p>
-						<!-- TODO image -->
+						<img data-src="lib/img/choose-squash-and-merge.png">
+					</section>
+					<section>
+						<p>Here developer should provide message according to <a href="https://github.com/OpusCapita/minsk-core-multitool">particular template</a>.</p>
+						<img data-src="lib/img/release-notes-commit-message.png">
 					</section>
 					<section>
 						<p>Properly formatted message will be automatically parsed during release phase and used as a part of <span style="color: goldenrod">release notes</span>.</p>
 						<!-- TODO image -->
 					</section>
 					<section>
-						<p>Delete development branch after merge (press a button on Github)</p>
+						<p>Delete development branch after merge</p>
 						<!-- TODO image -->
 					</section>
 					<section>
@@ -258,7 +270,45 @@
 						</ul>
 						<!-- TODO image -->
 					</section>
-
+				</section>
+				<section>
+					<section>
+						<h2>Conclusion</h2>
+					</section>
+					<section>
+						<p>No more inventing a wheel for every ticket: clear workflow covers all needs in 9/10 cases (and growing as development flow is adjusted to the needs of team).</p>
+					</section>
+					<section>
+						<p>Nobody needs to wait for someone else. This results in <span style="color: goldenrod">time saving</span> while providing better quality:</p>
+						<ul>
+							<li>more <span style="color: goldenrod">frequent development</span></li>
+							<li><span style="color: goldenrod">less features to test</span></li>
+							<li><span style="color: goldenrod">more focus</span></li>
+						</ul>
+					</section>
+					<section>
+						<p>This approach provides clear <span style="color: goldenrod">separation of concerns</span> and responsibility: developer is coding, QA is testing, robots assemble all parts. If something breaks along the line, it's <span style="color: goldenrod">easier to debug</span>.</p>
+					</section>
+					<section>
+						<p>While setup looks unified, developer can easily fine-grain or change it entirely, because configurations for all steps belong to a repository. Configuration for build process can differ per branch, configuration for deployment and release processes can differ per repository.</p>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>What's next?</h2>
+					</section>
+					<section>
+						<p>I encourage developers to follow these guidelines carefully, e.g. properly use branches, don't forget to write release notes in merge commit, use release tool instead of releasing manually.</p>
+					</section>
+					<section>
+						<p>I encourage teams to consider this workflow for their development process, because it's completely hands-on and Minsk core team benefits from it on a daily basis.</p>
+					</section>
+				</section>
+				<section>
+					<p>Any questions?</p>
+					<p>We are here to help:</p>
+					<p>opuscapita.slack#minsk-core-team</p><!-- TODO link -->
+					<p>Thank you.</p>
 				</section>
 			</div>
 		</div>

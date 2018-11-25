@@ -37,7 +37,7 @@
 					</ul>
 				</section>
 				<section>
-					<h2>Challenge</h2>
+					<h2>Goal</h2>
 					<p>Organize <span style="color: goldenrod">efficient</span> development process where development cycle takes <span style="color: goldenrod">less time</span> and provides <span style="color: goldenrod">highest quality</span> at the same time.</p>
 					<img data-src="lib/img/cd-circle.png" style="background: none; border: none; max-width: 45%" />
 				</section>
@@ -54,7 +54,7 @@
 					</section>
 					<section>
 						<h2>Branch per task workflow</h2>
-						<img data-src="lib/img/ghflow.png" style="background: none; border: none;" />
+						<img data-src="lib/img/ghflow.png" style="border: none;" />
 					</section>
 				</section>
 				<section>
@@ -94,6 +94,9 @@
 				<section>
 					<h1>Our solution</h1>
 					<img data-src="lib/img/cd-circle.png" style="background: none; border: none; max-width: 45%" />
+				</section>
+				<section>
+					<img data-src="lib/img/cd-details.png" /><!-- TODO fix ui appearance -->
 				</section>
 				<section>
 					<h2>Development phases</h2>
@@ -265,6 +268,11 @@
 					<section>
 						<p>On Azure AKS every deployment has a <span style="color: goldenrod">background job</span>, which <span style="color: goldenrod">tracks branch status</span> and when branch is deleted it <span style="color: goldenrod">deletes deployment from cluster</span> with all related resources.</p>
 						<p>Hense only relevant installations consume resources; <span style="color: goldenrod">obsolete installations are destroyed automatically</span>.</p>
+					</section>
+					<section>
+						<img data-src="lib/img/slack-logo.png" style="border: none; box-shadow: none; background: none; width: 150px"/>
+						<p style="text-align: left;">When deployment is deleted, <span style="color: goldenrod">notification</span> is sent into <span style="color: goldenrod">Slack</span> channel:</p>
+						<!-- TODO image -->
 					</section>
 					<section>
 						<p>Merge into main branch triggers automated CircleCI build on main branch.</p>

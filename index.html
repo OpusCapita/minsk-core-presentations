@@ -42,13 +42,20 @@
 					<img data-src="lib/img/cd-circle.png" style="background: none; border: none; max-width: 45%" />
 				</section>
 				<section>
-					<h2>Key decision:<br><span style="color: goldenrod">branch per task</span></h2>
-					<ul>
-						<li>tasks are developed in <span style="color: goldenrod">isolation</span></li>
-						<li>less cases to test</li>
-						<li>less collisions and merge conflicts</li>
-						<li>ability to define clear workflow</li>
-					</ul>
+					<section>
+						<h2>Key decision:<br><span style="color: goldenrod">branch per task</span></h2>
+						<ul>
+							<li>development branch is created for each task</li>
+							<li>tasks are developed in <span style="color: goldenrod">isolation</span></li>
+							<li>less cases to test</li>
+							<li>less collisions and merge conflicts</li>
+							<li>ability to define clear workflow</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Branch per task workflow</h2>
+						<img data-src="lib/img/ghflow.png" style="background: none; border: none;" />
+					</section>
 				</section>
 				<section>
 					<h2>Without continuous development</h2>
@@ -146,6 +153,8 @@
 					<section>
 						<h2>Building phase</h2>
 						<h4>Tool: <span style="color: lightseagreen">CircleCI</span></h4>
+						<p>Automates pipeline from commit to deploy</p>
+						<img data-src="lib/img/assembly-line-robots.gif">
 					</section>
 					<section>
 						<span style="color: goldenrod">Automatically starts</span> when commit is pushed
@@ -177,9 +186,15 @@
 				<section>
 					<section>
 						<h2>Deployment and testing</h2>
-						<h4>Tool: <span style="color: lightseagreen">Azure AKS</span></h4>
+						<h4>Tools:</h4>
+						<h4><span style="color: lightseagreen">CircleCI</span></h4>
+						<h4><span style="color: lightseagreen">Azure AKS</span></h4>
 						<img data-src="lib/img/k8s-logo.png" style="border: none; box-shadow: none; background: none; width: 150px"/>
 						<p>Kubernetes cluster is provisioned for development purposes using Azure AKS service.</p>
+					</section>
+					<section>
+						<p>CircleCI deployment workflow</p>
+						<img data-src="lib/img/deployment-finished.png" style="width: 450px">
 					</section>
 					<section>
 						<p style="text-align: left;">Every <span style="color: goldenrod">branch</span> is deployed into a separate <span style="color: goldenrod">namespace</span> (e.g. virtual sub-cluster).</p>
@@ -188,10 +203,6 @@
 							<li>provides a scope for names, e.g. eliminates possibility of naming collisons between Kubernetes resourses</li>
 							<li>allows to limit resources consumption per deployment</li>
 						</ul>
-					</section>
-					<section>
-						<p>CircleCI deployment workflow</p>
-						<img data-src="lib/img/deployment-finished.png" style="width: 450px">
 					</section>
 					<section>
 						<img data-src="lib/img/slack-logo.png" style="border: none; box-shadow: none; background: none; width: 150px"/>
@@ -212,6 +223,8 @@
 							<li>If QA <span style="color: red">fails</span> ticket is returned to developer and the whole process <span style="color: red">starts over</span></li>
 							<li>If QA is <span style="color: green">successful</span> then QA <span style="color: green">triggers release phase</span></li>
 						</ul>
+						<p>Say 'Hi' to QA:</p>
+						<img data-src="lib/img/nstoliar.jpg">
 					</section>
 					<section>
 						<p style="text-align: left;">Notes:</p>
@@ -233,23 +246,28 @@
 						</a>
 					</section>
 					<section>
-						<p>Merge development branch to the main (usually <span style="color: goldenrod">master</span>) branch. This triggers automated CircleCI build on main branch.</p>
-					</section>
-					<section>
+						<p>Merge pull request from development branch in the main (usually <span style="color: goldenrod">master</span>) branch.</p>
 						<p>Recommended merge mode is <span style="color: goldenrod">squash & merge</span>, which creates a <span style="color: goldenrod">single merge commit</span> out of all branch commits.</p>
-						<img data-src="lib/img/choose-squash-and-merge.png">
+						<img data-src="lib/img/choose-squash-and-merge.png" style="width: 500px">
 					</section>
 					<section>
-						<p>Here developer should provide message according to <a href="https://github.com/OpusCapita/minsk-core-multitool">particular template</a>.</p>
+						<p>Here developer should provide message according to <a href="https://github.com/OpusCapita/minsk-core-multitool">particular template</a> and <span style="color: goldenrod">confirm merge</span>.</p>
 						<img data-src="lib/img/release-notes-commit-message.png">
 					</section>
 					<section>
 						<p>Properly formatted message will be automatically parsed during release phase and used as a part of <span style="color: goldenrod">release notes</span>.</p>
-						<!-- TODO image -->
+						<img data-src="lib/img/release-notes.png" style="width: 500px">
 					</section>
 					<section>
-						<p>Delete development branch after merge</p>
-						<!-- TODO image -->
+						<p><span style="color: goldenrod">Delete</span> development branch after merge</p>
+						<img data-src="lib/img/delete-branch.gif" style="width: 600px">
+					</section>
+					<section>
+						<p>On Azure AKS every deployment has a <span style="color: goldenrod">background job</span>, which <span style="color: goldenrod">tracks branch status</span> and when branch is deleted it <span style="color: goldenrod">deletes deployment from cluster</span> with all related resources.</p>
+						<p>Hense only relevant installations consume resources; <span style="color: goldenrod">obsolete installations are destroyed automatically</span>.</p>
+					</section>
+					<section>
+						<p>Merge into main branch triggers automated CircleCI build on main branch.</p>
 					</section>
 					<section>
 						<p style="text-align: left;">If build on main branch is successful go to <a href="https://demo.core.dev.opuscapita.com/minsk-core-multitool/master">Minsk&nbsp;Core&nbsp;Multitool</a></p>
@@ -264,9 +282,9 @@
 					<section>
 						<p style="text-align: left;">CircleCI starts automated build according to rules defined in <span style="color: goldenrod">release</span> branch in the repository</p>
 						<ul>
-							<li>Github release is created, assigned a milestone, latest commit is tagged with release version</li>
-							<li>selected tickets are closed automatically</li>
-							<li>artifacts are built and published with the same version to corresponding repositories (maven artifactory, npmjs, etc.)</li>
+							<li>Github <span style="color: goldenrod">release is created</span>, assigned a <span style="color: goldenrod">milestone</span>, latest commit is <span style="color: goldenrod">tagged</span> with release version</li>
+							<li>selected <span style="color: goldenrod">tickets are closed</span> automatically</li>
+							<li><span style="color: goldenrod">artifacts are built</span> and <span style="color: goldenrod">published</span> with the same version to corresponding repositories (maven artifactory, npmjs, etc.)</li>
 						</ul>
 						<!-- TODO image -->
 					</section>
@@ -298,10 +316,15 @@
 						<h2>What's next?</h2>
 					</section>
 					<section>
-						<p>I encourage developers to follow these guidelines carefully, e.g. properly use branches, don't forget to write release notes in merge commit, use release tool instead of releasing manually.</p>
+						<p>I encourage developers to follow these guidelines:</p>
+						<ul>
+							<li>properly <span style="color: goldenrod">use branches</span>,</li>
+							<li>don't forget to <span style="color: goldenrod">write release notes</span> in merge commit,</li>
+							<li><span style="color: goldenrod">use release tool</span> instead of releasing manually.</li>
+						</ul>
 					</section>
 					<section>
-						<p>I encourage teams to consider this workflow for their development process, because it's completely hands-on and Minsk core team benefits from it on a daily basis.</p>
+						<p>I encourage teams to <span style="color: goldenrod">consider this workflow</span> for their development process, because it's completely hands-on and Minsk core team benefits from it on a daily basis.</p>
 					</section>
 				</section>
 				<section>

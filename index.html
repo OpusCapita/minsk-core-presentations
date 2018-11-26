@@ -37,9 +37,15 @@
 					</ul>
 				</section>
 				<section>
-					<h2>Goal</h2>
-					<p>Organize <span style="color: goldenrod">efficient</span> development process where development cycle takes <span style="color: goldenrod">less time</span> and provides <span style="color: goldenrod">highest quality</span> at the same time.</p>
-					<img data-src="lib/img/cd-circle.png" style="background: none; border: none; max-width: 45%" />
+					<section>
+						<h2>Goal</h2>
+						<p>Organize <span style="color: goldenrod">efficient</span> development process where development cycle takes <span style="color: goldenrod">less time</span> and provides <span style="color: goldenrod">highest quality</span> at the same time.</p>
+						<img data-src="lib/img/cd-circle.png" style="background: none; border: none; max-width: 45%" />
+					</section>
+					<section>
+						<p><span style="color: goldenrod">Highest quality</span> can be achieved due to quality testing in conditions as <span style="color: goldenrod">close to production</span> environment as possible.</p>
+						<p>Therefore remotely installed application is preferable.</p>
+					</section>
 				</section>
 				<section>
 					<section>
@@ -63,7 +69,7 @@
 						<li><span style="color: goldenrod">create development branch</span> out of stable branch</li>
 						<li><span style="color: goldenrod">write code</span></li>
 						<li><span style="color: goldenrod">commit</span> to development branch</li>
-						<li><span style="color: goldenrod">build</span> artifacts for QA <span style="color: red">(takes time)</span></li>
+						<li><span style="color: goldenrod">build</span> artifacts for QA locally <span style="color: red">(takes time)</span></li>
 						<li>give QA links to artifacts</li>
 						<li>QA tries to <span style="color: red">deploy</span> app locally <span style="color: red">(takes time, can fail)</span></li>
 						<li>QA test fails -> start over</li>
@@ -95,9 +101,6 @@
 					<h1>Our solution</h1>
 					<img data-src="lib/img/cd-circle.png" style="background: none; border: none; max-width: 45%" />
 				</section>
-				<section data-background-color="#ffffff">
-					<img data-src="lib/img/cd-details.png" style="background: white; width: 800px; border: none; box-shadow: none"/><!-- TODO fix ui appearance -->
-				</section>
 				<section>
 					<h2>Development phases</h2>
 					<ul>
@@ -118,6 +121,9 @@
 						</li>
 						<li><span style="color: goldenrod">release</span> after successful testing,<br>otherwise start over</li>
 					</ul>
+				</section>
+				<section data-background-color="#ffffff">
+					<img data-src="lib/img/cd-details.png" style="background: white; width: 800px; border: none; box-shadow: none"/><!-- TODO fix ui appearance -->
 				</section>
 				<section>
 					<section>
@@ -249,7 +255,7 @@
 						</a>
 					</section>
 					<section>
-						<p>Merge pull request from development branch in the main (usually <span style="color: goldenrod">master</span>) branch.</p>
+						<p>Merge pull request from development branch into the main (usually <span style="color: goldenrod">master</span>) branch.</p>
 						<p>Recommended merge mode is <span style="color: goldenrod">squash & merge</span>, which creates a <span style="color: goldenrod">single merge commit</span> out of all branch commits.</p>
 						<img data-src="lib/img/choose-squash-and-merge.png" style="width: 500px">
 					</section>
@@ -258,7 +264,7 @@
 						<img data-src="lib/img/release-notes-commit-message.png">
 					</section>
 					<section>
-						<p>Properly formatted message will be automatically parsed during release phase and used as a part of <span style="color: goldenrod">release notes</span>.</p>
+						<p>Properly formatted message will be automatically parsed during following steps and used as a part of <span style="color: goldenrod">release notes</span>.</p>
 						<img data-src="lib/img/release-notes.png" style="width: 500px">
 					</section>
 					<section>
@@ -266,7 +272,7 @@
 						<img data-src="lib/img/delete-branch.gif" style="width: 600px">
 					</section>
 					<section>
-						<p>On Azure AKS every deployment has a <span style="color: goldenrod">background job</span>, which <span style="color: goldenrod">tracks branch status</span> and when branch is deleted it <span style="color: goldenrod">deletes deployment from cluster</span> with all related resources.</p>
+						<p>Every deployment in cluster has a <span style="color: goldenrod">background job</span>, which <span style="color: goldenrod">tracks branch status</span> and when branch is deleted it <span style="color: goldenrod">deletes deployment from cluster</span> with all related resources.</p>
 						<p>Hense only relevant installations consume resources; <span style="color: goldenrod">obsolete installations are destroyed automatically</span>.</p>
 					</section>
 					<section>

@@ -95,8 +95,8 @@
 					<h1>Our solution</h1>
 					<img data-src="lib/img/cd-circle.png" style="background: none; border: none; max-width: 45%" />
 				</section>
-				<section>
-					<img data-src="lib/img/cd-details.png" /><!-- TODO fix ui appearance -->
+				<section data-background-color="#ffffff">
+					<img data-src="lib/img/cd-details.png" style="background: white; width: 800px; border: none; box-shadow: none"/><!-- TODO fix ui appearance -->
 				</section>
 				<section>
 					<h2>Development phases</h2>
@@ -356,7 +356,8 @@
 					{ src: 'plugin/markdown/marked.js' },
 					{ src: 'plugin/markdown/markdown.js' },
 					{ src: 'plugin/notes/notes.js', async: true },
-					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
 				]
 			});
 		</script>

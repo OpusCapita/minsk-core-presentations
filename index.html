@@ -272,7 +272,7 @@
 					<section>
 						<img data-src="lib/img/slack-logo.png" style="border: none; box-shadow: none; background: none; width: 150px"/>
 						<p style="text-align: left;">When deployment is deleted, <span style="color: goldenrod">notification</span> is sent into <span style="color: goldenrod">Slack</span> channel:</p>
-						<!-- TODO image -->
+						<img data-src="lib/img/slack-notification-delete.png" style="border: none">
 					</section>
 					<section>
 						<p>Merge into main branch triggers automated CircleCI build on main branch.</p>
@@ -285,16 +285,23 @@
 							<li>select ticket(s) which developer implemented or fixed in this cycle</li>
 							<li>submit request</li>
 						</ul>
-						<!-- TODO image -->
+					</section>
+					<section>
+						<img data-src="lib/img/multitool.gif" style="border: none; box-shadow: none">
 					</section>
 					<section>
 						<p style="text-align: left;">CircleCI starts automated build according to rules defined in <span style="color: goldenrod">release</span> branch in the repository</p>
 						<ul>
 							<li>Github <span style="color: goldenrod">release is created</span>, assigned a <span style="color: goldenrod">milestone</span>, latest commit is <span style="color: goldenrod">tagged</span> with release version</li>
-							<li>selected <span style="color: goldenrod">tickets are closed</span> automatically</li>
+							<li>selected <span style="color: goldenrod">issues</span> are labeled as <span style="color: goldenrod">closed</span> automatically</li>
 							<li><span style="color: goldenrod">artifacts are built</span> and <span style="color: goldenrod">published</span> with the same version to corresponding repositories (maven artifactory, npmjs, etc.)</li>
 						</ul>
-						<!-- TODO image -->
+					</section>
+					<section>
+						<img data-src="lib/img/fsm-release-job.gif" style="border: none; box-shadow: none; width: 500px">
+					</section>
+					<section>
+						<img data-src="lib/img/fsm-release.gif" style="border: none; box-shadow: none">
 					</section>
 				</section>
 				<section>
@@ -338,8 +345,14 @@
 				<section>
 					<p>Any questions?</p>
 					<p>We are here to help:</p>
-					<p>opuscapita.slack#minsk-core-team</p><!-- TODO link -->
+					<p><a href="slack://channel?id=C7LPXPFMJ&team=T3KASERC2">opuscapita.slack#minsk-core-team</a></p>
 					<p>Thank you.</p>
+					<p>Speaker: Egor Stambakio</p>
+					<img data-src="lib/img/estambakio.jpg" style="border: none; box-shadow: none; width: 100px">
+				</section>
+				<section>
+					<p>P. S. How you can find these slides</p>
+					<a href="https://estambakio-sc.github.io/continuous-development/">estambakio-sc.github.io/continuous-development/</a>
 				</section>
 			</div>
 		</div>

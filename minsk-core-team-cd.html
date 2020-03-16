@@ -1,0 +1,384 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Minsk Core Team Continuous Development</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section data-background-image="lib/img/team.jpg">
+					<h2 style="margin: 220px auto 50px;">Continuous Development in Minsk core team</h2>
+					<p>Speaker: Egor Stambakio</p>
+				</section>
+				<section>
+					<h2>Use case</h2>
+					<ul>
+						<li>~200 Github repositories</li>
+						<li>modules and standalone applications written in different languages, using different build tools</li>
+						<li>requirement to support <span style="color: goldenrod">multiple versions</span> per module - one or more stable and many bugfix branches</li>
+					</ul>
+				</section>
+				<section>
+					<section>
+						<h2>Goal</h2>
+						<p>Organize <span style="color: goldenrod">efficient</span> development process where development cycle takes <span style="color: goldenrod">less time</span> and provides <span style="color: goldenrod">highest quality</span> at the same time.</p>
+						<img data-src="lib/img/cd-circle.png" style="background: none; border: none; max-width: 45%" />
+					</section>
+					<section>
+						<p><span style="color: goldenrod">Highest quality</span> can be achieved due to quality testing in conditions as <span style="color: goldenrod">close to production</span> environment as possible.</p>
+						<p>Therefore remotely installed application is preferable.</p>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>Key decision:<br><span style="color: goldenrod">branch per task</span></h2>
+						<ul>
+							<li>development branch is created for each task</li>
+							<li>tasks are developed in <span style="color: goldenrod">isolation</span></li>
+							<li>less cases to test</li>
+							<li>less collisions and merge conflicts</li>
+							<li>ability to define clear workflow</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Branch per task workflow</h2>
+						<img data-src="lib/img/gitflow.png" style="border: none;" />
+					</section>
+				</section>
+				<section>
+					<h2>Without continuous development</h2>
+					<ul>
+						<li><span style="color: goldenrod">create development branch</span> out of stable branch</li>
+						<li><span style="color: goldenrod">write code</span></li>
+						<li><span style="color: goldenrod">commit</span> to development branch</li>
+						<li><span style="color: goldenrod">build</span> artifacts for QA locally <span style="color: red">(takes time)</span></li>
+						<li>give QA links to artifacts</li>
+						<li>QA tries to <span style="color: red">deploy</span> app locally <span style="color: red">(takes time, can fail)</span></li>
+						<li>QA test fails -> start over</li>
+					</ul>
+				</section>
+				<section>
+					<h2>With continuous development</h2>
+					<ul>
+						<li><span style="color: goldenrod">create development branch</span> out of stable branch</li>
+						<li><span style="color: goldenrod">write code</span></li>
+						<li><span style="color: goldenrod">commit</span> to development branch</li>
+						<li>assign ticket to QA</li>
+						<li><span style="color: goldenrod">start next task</span></li>
+					</ul>
+					<p><span style="color: green">Build</span> and <span style="color: green">deployment</span> are handled by background job.</p>
+				</section>
+				<section style="font-size: smaller">
+					<h2>Benefits of Continuous Development</h2>
+					<ul>
+						<li><span style="color: green">reduced overhead</span> of repetitive build/deployment operations</li>
+						<li><span style="color: green">reproducible builds</span> in predictable environment reduce uncertainty when build fails</li>
+						<li>more frequent cycles allow <span style="color: green">more rapid software development</span></li>
+						<li>developer and QA are <span style="color: green">focused on their job</span>, rather than fighting deployment issues</li>
+						<li><span style="color: green">less room for mistakes</span></li>
+						<li>clear separation of responsibility</li>
+					</ul>
+				</section>
+				<section>
+					<h1>Our solution</h1>
+					<img data-src="lib/img/cd-circle.png" style="background: none; border: none; max-width: 45%" />
+				</section>
+				<section>
+					<h2>Development phases</h2>
+					<ul>
+						<li><span style="color: goldenrod">coding</span></li>
+						<li>
+								<span style="color: goldenrod">building</span>
+							<ul>
+								<li>running automated tests on codebase</li>
+								<li>building artifacts (WAR files, docker images)</li>
+							</ul>
+						</li>
+						<li>
+								<span style="color: goldenrod">deployment and testing</span>
+							<ul>
+								<li>deploying live demo website accessible by URL</li>
+								<li>QA testing</li>
+							</ul>
+						</li>
+						<li><span style="color: goldenrod">release</span> after successful testing,<br>otherwise start over</li>
+					</ul>
+				</section>
+				<section data-background-color="#ffffff">
+					<img data-src="lib/img/cd-details.png" style="background: white; width: 800px; border: none; box-shadow: none"/><!-- TODO fix ui appearance -->
+				</section>
+				<section>
+					<section>
+						<h2>Coding phase</h2>
+						<h4>Tool: <span style="color: lightseagreen">Github</span></h4>
+						<img data-src="lib/img/coding.gif" style="border: none; width: 200px; box-shadow: none"/>
+					</section>
+					<section>
+						<p>Task is an open issue on Github</p>
+						<img data-src="lib/img/create-issue.gif">
+					</section>
+					<section>
+						<p>Create <span style="color: goldenrod">branch</span> for this issue</p>
+						<img data-src="lib/img/create-branch.gif">
+					</section>
+					<section>
+						<p><span style="color: goldenrod">Commit</span> code to the branch and <span style="color: goldenrod">push</span> branch to Github</p>
+						<img data-src="lib/img/change-readme.gif" style="width: 700px">
+						<p><span style="color: green">Triggers the next stage</span>: build</p>
+					</section>
+					<section>
+						<p>In every repository there is a directory <span style="color: goldenrod">.circleci</span> with a <span style="color: goldenrod">config.yml</span> file for CircleCI. Without it next phase won't be triggered.</p>
+					</section>
+					<section>
+						<p style="font-size: smaller; text-align: left;">If module can't be deployed (e.g. grails plugin), it is deployed as a part of bigger application.</p>
+
+						<p style="font-size: smaller; text-align: left;">In this case additional steps are required:</p>
+						<ul>
+							<li><span style="color: goldenrod">create a branch</span> in application repository</li>
+							<li><span style="color: goldenrod">plug in</span> module's development branch as a dependency</li>
+							<li><span style="color: goldenrod">push</span> branch in application: <span style="color: green">triggers 'build' phase</span></li>
+						</ul>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>Building phase</h2>
+						<h4>Tool: <span style="color: lightseagreen">CircleCI</span></h4>
+						<p>Automates pipeline from commit to deploy</p>
+						<img data-src="lib/img/assembly-line-robots.gif">
+					</section>
+					<section>
+						<span style="color: goldenrod">Automatically starts</span> when commit is pushed
+						<img data-src="lib/img/build-started.png">
+					</section>
+					<section>
+						<span style="color: goldenrod">Automatically executes</span> workflow for this branch
+						<ul>
+							<li>run unit tests</li>
+							<li>run integration tests</li>
+							<li>build and publish artifacts</li>
+							<li>build and publish docker images</li>
+						</ul>
+					</section>
+					<section>
+						<p>CircleCI build workflow</p>
+						<img data-src="lib/img/build-finished.png" style="width: 450px">
+						<p><span style="color: green">Triggers the next stage</span>: deploy to Kubernetes cluster</p>
+					</section>
+					<section>
+						<p style="text-align: left;">Notes:</p>
+						<ul>
+							<li>build is configured in .circleci/config.yml file in current branch</li>
+							<li>deployment job to CircleCI is unified in form of reusable config "Orb" located here <a href="https://github.com/OpusCapita/circleci-orbs/tree/master/src/kubernetes">https://github.com/OpusCapita/circleci-orbs/tree/master/src/kubernetes</a></li>
+							<li>adding deployment job is as simple as adding 2 lines of text</li>
+						</ul>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>Deployment and testing</h2>
+						<h4>Tools:</h4>
+						<h4><span style="color: lightseagreen">CircleCI</span></h4>
+						<h4><span style="color: lightseagreen">Azure AKS</span></h4>
+						<img data-src="lib/img/k8s-logo.png" style="border: none; box-shadow: none; background: none; width: 150px"/>
+						<p>Kubernetes cluster is provisioned for development purposes using Azure AKS service.</p>
+					</section>
+					<section>
+						<p>CircleCI deployment workflow</p>
+						<img data-src="lib/img/deployment-finished.png" style="width: 450px">
+					</section>
+					<section>
+						<p style="text-align: left;">Every <span style="color: goldenrod">branch</span> is deployed into a separate <span style="color: goldenrod">namespace</span> (e.g. virtual sub-cluster).</p>
+						<ul>
+							<li>this separates deployment related to one task in a single module from all other deployments in cluster</li>
+							<li>provides a scope for names, e.g. eliminates possibility of naming collisons between Kubernetes resourses</li>
+							<li>allows to limit resources consumption per deployment</li>
+						</ul>
+					</section>
+					<section>
+						<img data-src="lib/img/slack-logo.png" style="border: none; box-shadow: none; background: none; width: 150px"/>
+						<p style="text-align: left;">When deployment is triggered by previous step, <span style="color: goldenrod">notification</span> is sent into <span style="color: goldenrod">Slack</span> channel providing useful details, e.g. links to deployment, source code, etc.</p>
+						<img data-src="lib/img/slack-notification.png" style="border: none">
+					</section>
+					<section>
+						<p>When deployment is up an running it is accessible in browser via URL, e.g. https://demo.core.dev.opuscapita.com/<span style="color: goldenrod">repo</span>/<span style="color: green">branch</span>/</p>
+						<img data-src="lib/img/live-website.png">
+					</section>
+					<section>
+						<p>Now we know that code is working. Create a <span style="color: goldenrod">pull request</span> for <span style="color: goldenrod">code review</span></p>
+						<img data-src="lib/img/create-pull-request.gif">
+					</section>
+					<section>
+						<ul>
+							<li>QA can perform manual and/or automated testing on a <span style="color: goldenrod">live running application</span></li>
+							<li>If QA <span style="color: red">fails</span> ticket is returned to developer and the whole process <span style="color: red">starts over</span></li>
+							<li>If QA is <span style="color: green">successful</span> then QA <span style="color: green">triggers release phase</span></li>
+						</ul>
+						<p>Say 'Hi' to QA:</p>
+						<img data-src="lib/img/nstoliar.jpg">
+					</section>
+					<section>
+						<p style="text-align: left;">Notes:</p>
+						<ul>
+							<li>deployments for <span style="color: goldenrod">private repositories</span> are <span style="color: goldenrod">secured</span> by Azure ActiveDirectory and allow access only for OpusCapita members</li>
+							<li>configuration for deployments is placed in <span style="color: goldenrod">continuous-delivery</span> branch in a repository been built</li>
+						</ul>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>Release phase</h2>
+						<h4>Tools:</h4>
+						<h4><span style="color: lightseagreen">Github</span></h4>
+						<h4><span style="color: lightseagreen">CircleCI</span></h4>
+						<h4><span style="color: lightseagreen">Minsk Core Multitool</span></h4>
+						<a href="https://demo.core.dev.opuscapita.com/minsk-core-multitool/master" style="font-size: 20px">
+							https://demo.core.dev.opuscapita.com/minsk-core-multitool/master
+						</a>
+					</section>
+					<section>
+						<p>Merge pull request from development branch into the main (usually <span style="color: goldenrod">master</span>) branch.</p>
+						<p>Recommended merge mode is <span style="color: goldenrod">squash & merge</span>, which creates a <span style="color: goldenrod">single merge commit</span> out of all branch commits.</p>
+						<img data-src="lib/img/choose-squash-and-merge.png" style="width: 500px">
+					</section>
+					<section>
+						<p>Here developer should provide message according to <a href="https://github.com/OpusCapita/minsk-core-multitool">particular template</a> and <span style="color: goldenrod">confirm merge</span>.</p>
+						<img data-src="lib/img/release-notes-commit-message.png">
+					</section>
+					<section>
+						<p>Properly formatted message will be automatically parsed during following steps and used as a part of <span style="color: goldenrod">release notes</span>.</p>
+						<img data-src="lib/img/release-notes.png" style="width: 500px">
+					</section>
+					<section>
+						<p><span style="color: goldenrod">Delete</span> development branch after merge</p>
+						<img data-src="lib/img/delete-branch.gif" style="width: 600px">
+					</section>
+					<section>
+						<p>Every deployment in cluster has a <span style="color: goldenrod">background job</span>, which <span style="color: goldenrod">tracks branch status</span> and when branch is deleted it <span style="color: goldenrod">deletes deployment from cluster</span> with all related resources.</p>
+						<p>Hense only relevant installations consume resources; <span style="color: goldenrod">obsolete installations are destroyed automatically</span>.</p>
+					</section>
+					<section>
+						<img data-src="lib/img/slack-logo.png" style="border: none; box-shadow: none; background: none; width: 150px"/>
+						<p style="text-align: left;">When deployment is deleted, <span style="color: goldenrod">notification</span> is sent into <span style="color: goldenrod">Slack</span> channel:</p>
+						<img data-src="lib/img/slack-notification-delete.png" style="border: none">
+					</section>
+					<section>
+						<p>Merge into main branch triggers automated CircleCI build on main branch.</p>
+					</section>
+					<section>
+						<p style="text-align: left;">If build on main branch is successful go to <a href="https://demo.core.dev.opuscapita.com/minsk-core-multitool/master">Minsk&nbsp;Core&nbsp;Multitool</a></p>
+						<ul>
+							<li>select repository and main branch</li>
+							<li>fill in release and SNAPSHOT versions</li>
+							<li>select ticket(s) which developer implemented or fixed in this cycle</li>
+							<li>submit request</li>
+						</ul>
+					</section>
+					<section>
+						<img data-src="lib/img/multitool.gif" style="border: none; box-shadow: none">
+					</section>
+					<section>
+						<p style="text-align: left;">CircleCI starts automated build according to rules defined in <span style="color: goldenrod">release</span> branch in the repository</p>
+						<ul>
+							<li>Github <span style="color: goldenrod">release is created</span>, assigned a <span style="color: goldenrod">milestone</span>, latest commit is <span style="color: goldenrod">tagged</span> with release version</li>
+							<li>selected <span style="color: goldenrod">issues</span> are labeled as <span style="color: goldenrod">closed</span> automatically</li>
+							<li><span style="color: goldenrod">artifacts are built</span> and <span style="color: goldenrod">published</span> with the same version to corresponding repositories (maven artifactory, npmjs, etc.)</li>
+						</ul>
+					</section>
+					<section>
+						<img data-src="lib/img/fsm-release-job.gif" style="border: none; box-shadow: none; width: 500px">
+					</section>
+					<section>
+						<img data-src="lib/img/fsm-release.gif" style="border: none; box-shadow: none">
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>Conclusion</h2>
+					</section>
+					<section>
+						<p>No more inventing a wheel for every ticket: clear workflow covers all needs in 9/10 cases (and growing as development flow is adjusted to the needs of team).</p>
+					</section>
+					<section>
+						<p>Nobody needs to wait for someone else. This results in <span style="color: goldenrod">time saving</span> while providing better quality:</p>
+						<ul>
+							<li>more <span style="color: goldenrod">frequent development</span></li>
+							<li><span style="color: goldenrod">less features to test</span></li>
+							<li><span style="color: goldenrod">more focus</span></li>
+						</ul>
+					</section>
+					<section>
+						<p>This approach provides clear <span style="color: goldenrod">separation of concerns</span> and responsibility: developer is coding, QA is testing, robots assemble all parts. If something breaks along the line, it's <span style="color: goldenrod">easier to debug</span>.</p>
+					</section>
+					<section>
+						<p>While setup looks unified, developer can easily fine-grain or change it entirely, because configurations for all steps belong to a repository. Configuration for build process can differ per branch, configuration for deployment and release processes can differ per repository.</p>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>What's next?</h2>
+					</section>
+					<section>
+						<p>I encourage developers to follow these guidelines:</p>
+						<ul>
+							<li>properly <span style="color: goldenrod">use branches</span></li>
+							<li>don't forget to <span style="color: goldenrod">write release notes</span> in merge commit</li>
+							<li><span style="color: goldenrod">use release tool</span> instead of releasing manually</li>
+						</ul>
+					</section>
+					<section>
+						<p>I encourage teams to <span style="color: goldenrod">consider this workflow</span> for their development process, because it's completely hands-on and Minsk core team benefits from it on a daily basis.</p>
+					</section>
+				</section>
+				<section>
+					<p>Any questions?</p>
+					<p>We are here to help:</p>
+					<p>Slack: channel #minsk-core-team</p>
+					<p>Thank you.</p>
+					<p>Speaker: Egor Stambakio</p>
+					<img data-src="lib/img/estambakio.jpg" style="border: none; box-shadow: none; width: 100px">
+				</section>
+				<section>
+					<p>P. S. How you can find these slides</p>
+					<a href="https://opuscapita.github.io/minsk-core-presentations/">opuscapita.github.io/minsk-core-presentations</a>
+				</section>
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+				]
+			});
+		</script>
+	</body>
+</html>

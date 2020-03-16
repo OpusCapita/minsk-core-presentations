@@ -1,0 +1,62 @@
+# CI/CD pipeline for eProcurement applications
+
+## Big picture
+
+## Current state
+
+Currently there're about 20 eProc installations in development cluster
+with different combinations of applications and their versions,
+e.g. `GA`/`bugfix` versions and current development versions for testing purpose.
+
+(Almost) every installation can be created, updated and deleted by any developer - it doesn't require manual intervention.
+
+## Infractructure
+
+Approach: "Infrastructure as code"
+
+Github repository: https://github.com/OpusCapita/lunar-station
+
+Enables
+- creating (possibly multiple copies of) entire infrastructions for deployments;
+- CI/CD/GitOps for infractructure just like for applications
+
+In order to test new software or update some part of running stack there's no need to touch running cluster.
+
+A new independent copy of cluster can be created in ~30 minutes,
+any operations can be done there `without fear of breaking running installations`,
+and after all it can be deleted and stop consuming money.
+
+### Technical details
+In order to create a cluster we need to create a branch on Github (and update configuration file if needed).
+When it's pushed CI process does the rest.
+Nothing stops developer from deleting or adding any parts of infrastructure on his custom branch.
+
+## eProc-line deployment
+
+Approach: "Configuration as code"
+
+Github repository: https://github.com/OpusCapita/eproc-line-deployment
+
+Applications and support services are described in form of configuration for Kubernetes.
+
+A new installation can be created just by creating a branch based on `master` branch.
+
+Installation can be customized using dosens of options in configuration file
+(pretty low-level, requires knowledge of Kubernetes/Helm).
+
+### Technical details
+In order to create a new installation we need to create a branch on Github (and update configuration file if needed).
+When it's pushed CI process does the rest.
+Nothing stops developer from deleting or adding any parts of installation on his custom branch.
+
+## eProc-line launcher
+
+Convenient UI for managing installations of `eProc-line deployment`
+
+Motivation: Keep it simple, easy for everyone
+
+Github repository: https://github.com/OpusCapita/eproc-line-launcher
+
+Allows to perform Create, Read, Update, Delete operations on `eProc-line deployment` on UI, without hassle.
+
+Also acts as a dashboard and provides a bird-eye view on what's going on with eProc deployments.

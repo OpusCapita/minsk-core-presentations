@@ -1,0 +1,151 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Minsk Core Team Continuous Development</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section data-background-image="lib/img/eproc-cicd-background.jpg">
+					<h2 style="margin: 220px auto 50px;">CI/CD pipeline for eProcurement applications</h2>
+					<p>Speaker: Egor Stambakio</p>
+				</section>
+
+				<section>
+					<h2>Big picture</h2>
+					<img data-src="lib/img/lunar-station-big-picture.png" style="background: none; border: none;" />
+				</section>
+
+				<section>
+					<h2>Current state</h2>
+					<p>Currently there're <span style="color: goldenrod">about 20 eProc installations</span> in development cluster with different combinations of applications and their versions, e.g. <span style="color: goldenrod">GA</span>/<span style="color: goldenrod">bugfix</span> versions and current development versions for testing purpose.</p>
+					<p>(Almost) every installation can be <span style="color: goldenrod">created</span>, <span style="color: goldenrod">updated</span> and <span style="color: goldenrod">deleted</span> by <span style="color: green">any developer</span> - it doesn't require manual intervention.</p>
+				</section>
+
+				<section>
+					<section>
+						<h2>Infractructure</h2>
+						<ul>
+							<li><span style="color: goldenrod">"Infrastructure as code"</span> approach</li>
+							<li>Github repository: <a href="https://github.com/OpusCapita/lunar-station" target="_blank">OpusCapita/lunar-station</a></li>
+							<li>Enables creating (possibly multiple copies of) entire infrastruction</li>
+							<li><span style="color: green">CI/CD/GitOps for infractructure</span> just like for applications</li>
+						</ul>
+					</section>
+
+					<section>
+						<p>In order to test new software or update some part of running stack there's <span style="color: goldenrod">no need to touch running cluster</span>.</p>
+
+						<p>A new independent copy of cluster can be created in ~30 minutes,
+						any operations can be done there <span style="color: goldenrod">without fear of breaking running installations</span>,
+						and after all it can be deleted and stop consuming money.</p>
+					</section>
+
+					<section>
+						<h2>Technical details</h2>
+						<ul>
+							<li>In order to <span style="color: goldenrod">create a cluster</span> we need to <span style="color: goldenrod">create a branch</span> on Github (and update configuration file if needed).</li>
+							<li>When it's pushed <span style="color: green">CI process does the rest</span>.</li>
+							<li>Nothing stops developer from deleting or adding any parts of infrastructure on his custom branch.</li>
+						</ul>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>eProc-line deployment</h2>
+						<ul>
+							<li><span style="color: goldenrod">"Configuration as code"</span> approach</li>
+							<li>Github repository: <a href="https://github.com/OpusCapita/eproc-line-deployment" target="_blank">OpusCapita/eproc-line-deployment</a></li>
+							<li>Applications are desribed as <span style="color: goldenrod">Kubernetes/Helm</span> resources</li>
+							<li>Deployment has dosens of configuration parameters with sane defaults</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Technical details</h2>
+						<ul>
+							<li>In order to <span style="color: goldenrod">create a new installation</span> we need to <span style="color: goldenrod">create a branch</span> on Github (and update configuration file if needed).</li>
+							<li>When it's pushed <span style="color: green">CI process does the rest</span>.</li>
+							<li>Nothing stops developer from deleting or adding any parts of installation on his custom branch.</li>
+						</ul>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>eProc-line launcher</h2>
+						<ul>
+							<li><span style="color: goldenrod">Convenient UI</span> for managing installations of <a href="https://github.com/OpusCapita/eproc-line-deployment" target="_blank">eProc-line deployment</a></li>
+							<li>Motivation: <span style="color: goldenrod">keep it simple, easy</span> for everyone</li>
+							<li>Github repository: <a href="https://github.com/OpusCapita/eproc-line-launcher" target="_blank">OpusCapita/eproc-line-launcher</a></li>
+							<li>Allows to perform hassle-free <span style="color: goldenrod">Create</span>, <span style="color: goldenrod">Read</span>, <span style="color: goldenrod">Update</span>, <span style="color: goldenrod">Delete</span> operations on <a href="https://github.com/OpusCapita/eproc-line-deployment" target="_blank">eProc-line deployment</a></li>
+							<li>Also acts as a <span style="color: goldenrod">dashboard</span> and provides a bird-eye view on what's going on with eProc deployments.</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>What it looks like</h2>
+						<a href="https://demo.eproc.dev.opuscapita.com/eproc-line-launcher/master/" target="_blank"><img data-src="lib/img/eproc-line-launcher.png" style="background: none; border: none;" /></a>
+					</section>
+
+					<section>
+						<h2>Technical details</h2>
+						<ul>
+							<li>In order to <span style="color: goldenrod">create a new installation</span> we need to <span style="color: goldenrod">create a branch</span> on Github (and update configuration file if needed).</li>
+							<li>When it's pushed <span style="color: green">CI process does the rest</span>.</li>
+							<li>Nothing stops developer from deleting or adding any parts of installation on his custom branch.</li>
+						</ul>
+					</section>
+				</section>
+
+				<section>
+					<p>Any questions?</p>
+					<p>Thank you.</p>
+					<p>Speaker: Egor Stambakio</p>
+					<img data-src="lib/img/estambakio.jpg" style="border: none; box-shadow: none; width: 100px">
+				</section>
+				<section>
+					<p>P. S. How you can find these slides</p>
+					<a href="https://opuscapita.github.io/minsk-core-presentations/">opuscapita.github.io/minsk-core-presentations</a>
+				</section>
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+				]
+			});
+		</script>
+	</body>
+</html>

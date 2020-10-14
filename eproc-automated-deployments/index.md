@@ -81,6 +81,10 @@ https://demo.eproc.dev.opuscapita.com/eproc-line-launcher/master/
 
 ---
 
+![width:450px](./img/deployment-config.png)
+
+---
+
 ![width:1200px](./img/how_user_interface_works_with_github.png)
 
 ---

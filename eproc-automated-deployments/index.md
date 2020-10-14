@@ -16,10 +16,10 @@ Speaker: Egor Stambakio
 
 # Use cases
 
-- test integration between several applications (for example Shop -> Procurement order flow)
-- execute automated tests in browser
-- test manually in browser
-- showcase installations, presentations
+- **test integration** between several applications (for example Shop -> Procurement order flow)
+- **execute automated tests** in browser
+- **test manually** in browser
+- **showcase** installations, presentations
 
 ---
 
@@ -27,8 +27,9 @@ Speaker: Egor Stambakio
 
 ---
 
-# We also want:
+#### We also want:
 
+- runtime as **close to production** as possible
 - **repeatable builds** (2 QA have 2 equal deployments)
 - **easy configuration** (everyone can do it)
 - **persistent configuration** (how it was configured?)
@@ -38,7 +39,7 @@ Speaker: Egor Stambakio
 
 ---
 
-# How it's achieved:
+#### How it's achieved:
 
 - **repeatable builds** - Continuous Integration (CircleCI)
 - **easy configuration** - User interface (web application)

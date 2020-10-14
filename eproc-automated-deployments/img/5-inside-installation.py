@@ -17,6 +17,7 @@ from diagrams.azure.identity import ActiveDirectory
 from diagrams.generic.device import Tablet
 from diagrams.azure.storage import StorageAccounts
 from diagrams.onprem.container import Docker
+from diagrams.generic.storage import Storage
 
 with Diagram("\n\nInside installation", show=False):
   user = User("User")
@@ -62,10 +63,12 @@ with Diagram("\n\nInside installation", show=False):
           solr = Solr("Solr search engine")
           opc >> solr
 
-          josso = SVC("JoSSO (auth)")
-          user >> dns >> lb >> josso >> apps
+          josso = SVC("JoSSO\n(Single sign-on)")
+          user >> dns >> lb >> oauth2 >> josso >> apps
 
-          email = SimpleEmailServiceSes("email server\nfor development\n(catch-all SMTP)")
+          email = SimpleEmailServiceSes("email server\nfor development\n(catch-all SMTP)\nwith UI and\nREST API")
+
+          fs = Storage("Shared filesystem:\nworkarea,\nconfiguration area,\ncustomization area")
 
           shell = Tablet("Web console\nwhich allows\nlower level\nadmin actions")
 

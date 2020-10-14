@@ -89,7 +89,7 @@ https://demo.eproc.dev.opuscapita.com/eproc-line-launcher/master/
 
 ---
 
-![width:1000px](./img/inside_installation.png)
+![width:900px](./img/inside_installation.png)
 
 ---
 

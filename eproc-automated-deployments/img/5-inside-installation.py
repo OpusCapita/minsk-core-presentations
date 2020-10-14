@@ -16,6 +16,7 @@ from diagrams.elastic.elasticsearch import Kibana
 from diagrams.azure.identity import ActiveDirectory
 from diagrams.generic.device import Tablet
 from diagrams.azure.storage import StorageAccounts
+from diagrams.onprem.container import Docker
 
 with Diagram("\n\nInside installation", show=False):
   user = User("User")
@@ -28,14 +29,35 @@ with Diagram("\n\nInside installation", show=False):
 
       with Cluster("Namespace 'dev-eproc-line-deployment-feature-2079'"):
         with Cluster("Applications"):
-          opc = SVC("Shop: 2020Q2")
-          apps = [
-            SVC("Order: feature-2079"),
-            opc,
-            SVC("User&MD: 2020Q2"),
-            SVC("Quote: 2020Q2")
-          ]
-          SVC("...")
+          with Cluster("Shop"):
+            opc = SVC("Shop")
+            opcd = Docker("opuscapita/opc:2020Q2")
+            opc >> opcd
+
+          with Cluster("Order"):
+            proc = SVC("Order")
+            procd = Docker("opuscapita/proc:feature-2079")
+            proc >> procd
+
+          with Cluster("User&MD"):
+            prov = SVC("User&MD")
+            provd = Docker("opuscapita/prov:2020Q2")
+            prov >> provd
+
+          with Cluster("Quote"):
+            rfq = SVC("Quote")
+            rfqd = Docker("opuscapita/rfq:2020Q2")
+            rfq >> rfqd
+
+          with Cluster("..."):
+            dotdot = SVC("...")
+            dotdotd = Docker("...")
+            dotdot >> dotdotd
+
+          apps = [ proc, opc, prov, rfq, dotdot ]
+
+          images = [ procd, opcd, provd, rfqd, dotdotd ]
+
         with Cluster("Secondary services"):
           solr = Solr("Solr search engine")
           opc >> solr
@@ -50,22 +72,22 @@ with Diagram("\n\nInside installation", show=False):
       with Cluster("MySQL server"):
         dbsvc = SVC("mysql")
         db = Mysql("database\nfeature-2079")
-        apps >> dbsvc >> db
+        images >> dbsvc >> db
 
       with Cluster("Metrics"):
         grafana = Grafana("Grafana\nvisualizes metrics")
         prometheus = Prometheus("Prometheus\ngatheres metrics")
         prometheus >> grafana
-        apps >> prometheus
+        images >> prometheus
 
       with Cluster("Logs"):
         els = Elasticsearch("Elasticsearch\nstores logs")
         kibana = Kibana("Kibana\nUI for logs")
-        apps >> els >> kibana
+        images >> els >> kibana
 
       with Cluster("Backup/restore data"):
         velero = SVC("Velero\nsaves backups to\nAzure storage")
-        apps >> velero
+        images >> velero
 
   admin = User("Admin")
 

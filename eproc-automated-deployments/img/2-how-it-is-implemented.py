@@ -18,7 +18,7 @@ text = "I want: \n\nname: feature-2079\n\nOrder: feature-2079\nUser&MD: 2020Q2\n
 with Diagram("\n\nHow it is implemented", show=False):
   u = User("User interface\nOpusCapita/eproc-line-launcher")
   gh = Github("Github repository\nOpusCapita/eproc-line-deployment\nbranch 'feature-2079'")
-  dc = Circleci("Automated process\ninCircleCI")
+  dc = Circleci("Automated process\nin CircleCI")
   url = KubernetesServices("URL to running\ninstallation\nin Azure Kubernetes cluster\n\nhttps://demo.eproc.dev.opuscapita.com\n/eproc-line-deployment/feature-2079/")
   slack = Slack("Notification in Slack\n#eproc-dev-installations")
 

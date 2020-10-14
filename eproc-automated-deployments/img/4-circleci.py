@@ -10,7 +10,7 @@ text = "Create or update\n\nI want: \n\nname: feature-2079\n\nOrder: feature-207
 
 with Diagram("\n\nContinuous Integration", show=False):
   gh = Github("OpusCapita/eproc-line-deployment\nbranch 'feature-2079'")
-  ci = Circleci("OpusCapita/eproc-line-deployment\nbranch 'feature-2079'")
+  ci = Circleci("OpusCapita/eproc-line-deployment\nbranch 'feature-2079'\nwhich uses configuration\ndefined in .circleci/config.yaml\nfile on this branch")
   aks = KubernetesServices("Azure\nKubernetes\nService (AKS)")
 
   gh >> Edge(label="automated webhook\non every push") >> ci >> aks

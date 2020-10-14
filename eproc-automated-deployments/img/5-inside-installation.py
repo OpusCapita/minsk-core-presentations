@@ -20,7 +20,8 @@ from diagrams.onprem.container import Docker
 from diagrams.generic.storage import Storage
 
 with Diagram("\n\nInside installation", show=False):
-  user = User("User")
+  user = User("User\nhttps://demo.eproc.\ndev.opuscapita.com\n/eproc-line-deployment\n/feature-2079")
+
   with Cluster("Azure"):
     dns = DNSZones("demo.eproc.\ndev.opuscapita.com")
 
